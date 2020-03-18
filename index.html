@@ -231,6 +231,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://Liam-Xu.github.io/2020/03/18/2020-03-18-Laravel%20Route%E4%B9%8B%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80%E5%86%99%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZHIYU XU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZHIYU XU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/18/2020-03-18-Laravel%20Route%E4%B9%8B%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80%E5%86%99%E6%B3%95/" itemprop="url">Laravel Route之路由基础写法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-18T21:55:37+11:00">
+                2020-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Laravel%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index">
+                    <span itemprop="name">Laravel框架</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="2020-03-18-Laravel-Route之路由基础写法"><a href="#2020-03-18-Laravel-Route之路由基础写法" class="headerlink" title="2020-03-18-Laravel Route之路由基础写法"></a>2020-03-18-Laravel Route之路由基础写法</h1><h3 id="Route路由的基本概念"><a href="#Route路由的基本概念" class="headerlink" title="Route路由的基本概念"></a>Route路由的基本概念</h3><p>Route 是处理URL Request 的一种方法，所有的网站请求都会通过 Route来分配</p>
+<p>这里展示一个简单的route的写法</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// handle the default address 127.0.0.1:8888/</span></span><br><span class="line"><span class="comment">// it will return the view welcome.blade.php</span></span><br><span class="line"><span class="comment">// blade file locate in resources/views/</span></span><br><span class="line"></span><br><span class="line">Route::<span class="built_in">get</span>(<span class="string">'/'</span>, function () &#123;</span><br><span class="line"></span><br><span class="line">   return view('welcome');</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在Route的请求类型中，有</p>
+<ul>
+<li>get：访问网页时，用get请求</li>
+<li>post：处理表单的时候，常用post请求</li>
+<li>put: put和patch都是在update操作的时候使用，不同的是，put需要提交全部信息</li>
+<li>delete</li>
+<li>patch: put和patch都是在update操作的时候使用, patch只需要提交需要修改的信息即可</li>
+</ul>
+<p>六种类型</p>
+<hr>
+<h3 id="路由的常见写法"><a href="#路由的常见写法" class="headerlink" title="路由的常见写法"></a>路由的常见写法</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// handle 'get' &amp; 'post' request of "/register" URL</span></span><br><span class="line"><span class="comment">// thr register() function writes in RegisterController</span></span><br><span class="line">Route::any('/register', 'RegisterController@register');</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理 ‘/getCode’ URL的get请求</span></span><br><span class="line"><span class="comment">//请求分配到 RegisterController里面的getCode() 方法</span></span><br><span class="line">Route::get('/getCode', 'RegisterController@getCode');</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理 ‘/registerEvents’ URL的post请求</span></span><br><span class="line"><span class="comment">// 请求分配到 EventsController 里面的 registerEvents() 方法</span></span><br><span class="line">Route::post('/registerEvents', 'EventsController@registerEvents');</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理 ‘/events’ URL的多种请求</span></span><br><span class="line"><span class="comment">// 请求分配到 EventsController 里面的方法</span></span><br><span class="line">Route::resource('/events', 'EventsController');</span><br><span class="line"><span class="comment">//通过php artisan route:list，来查看所有的可用的Route路由</span></span><br><span class="line"><span class="comment">// | GET|HEAD    | events/create                 | events.create           | App\Http\Controllers\web\EventsController@create                </span></span><br><span class="line"><span class="comment">// | DELETE      | events/&#123;event&#125;                | events.destroy          | App\Http\Controllers\web\EventsController@destroy               </span></span><br><span class="line"><span class="comment">// | GET|HEAD    | events/&#123;event&#125;                | events.show             | App\Http\Controllers\web\EventsController@show                  </span></span><br><span class="line"><span class="comment">// | PUT|PATCH   | events/&#123;event&#125;                | events.update           | App\Http\Controllers\web\EventsController@update                </span></span><br><span class="line"><span class="comment">// | GET|HEAD    | events/&#123;event&#125;/edit           | events.edit             | App\Http\Controllers\web\EventsController@edit</span></span><br></pre></td></tr></table></figure>
+
+<p>通过php artisan route:list，来查看所有的可用的Route路由<br><img src="/images/resources/537DA293B9040580D1911C98EAD9DBB2.jpg" alt="IMAGE"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://Liam-Xu.github.io/2020/03/17/2020-03-17-Laravel%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE&%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%90%E8%A1%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -548,7 +706,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
